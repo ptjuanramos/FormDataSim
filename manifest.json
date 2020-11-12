@@ -1,0 +1,15 @@
+{
+    "name": "Form-Data SIM",
+    "version": "1.0",
+    "description": "Detect form and simulate a POST action by serializing the Form and sending it to endpoint.",
+    "manifest_version": 2,
+    "icons": {
+        "48": "icon48.png",
+       "128": "icon128.png"
+    },
+    "background": {
+        "scripts": ["scripts/form-detector.js"],
+        "persistent": false
+    },
+    "browser_action": {}
+}
