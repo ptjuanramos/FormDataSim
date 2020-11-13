@@ -3,14 +3,28 @@
     "version": "1.0",
     "description": "Detect form and simulate a POST action by serializing the Form and sending it to endpoint.",
     "manifest_version": 2,
-    "permissions": ["storage"],
+    "permissions": [
+        "storage", 
+        "tabs",
+        "activeTab"
+    ],
     "icons": {
         "48": "icon-off-48.png",
        "128": "icon128.png"
     },
     "background": {
-        "scripts": ["content/jquery-3.5.1.slim.min.js", "scripts/form-detector.js"],
+        "scripts": [
+            "content/jquery-3.5.1.slim.min.js", 
+            "scripts/constants.js",
+            "scripts/background.js"
+        ],
         "persistent": false
     },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": [
+            "scripts/form-detector.js"
+        ]
+    }],
     "browser_action": {}
 }
