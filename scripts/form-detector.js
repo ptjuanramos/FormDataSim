@@ -3,7 +3,7 @@ function initFormListener() {
 }
 
 function highlightForms() {
-
+    chrome.extension.getBackgroundPage().console.log($("form"));
 }
 
 function enableFormDetection() {

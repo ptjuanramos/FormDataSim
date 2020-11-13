@@ -9,7 +9,7 @@
        "128": "icon128.png"
     },
     "background": {
-        "scripts": ["scripts/form-detector.js"],
+        "scripts": ["content/jquery-3.5.1.slim.min.js", "scripts/form-detector.js"],
         "persistent": false
     },
     "browser_action": {}
