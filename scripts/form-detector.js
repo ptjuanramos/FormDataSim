@@ -4,18 +4,46 @@ function isMessageEquals(msg, expectedMessage) {
 
 chrome.runtime.onMessage.addListener(function(msg, _, _) {
     if(isMessageEquals(msg, MessageDetectForm)) {
-        $("form").each((_, element) => {
-            addFormClickListener(element);
-        });
+        onEachFormApplyAction($("form"), addFormClickListener);
     } else if(isMessageEquals(msg, MessageDetachForm)) {
-        //TODO
+        onEachFormApplyAction($("form"), removeFormClickListener);
     }
 });
 
-function highlightForm(form) {
-    form.addClass("highlight-form");
+function onEachFormApplyAction(forms, functionToApply) {
+    forms.each((_, form) => {
+        functionToApply($(form));    
+    });
+}
+
+function toggleHighlightForm(form) {
+    form.toggleClass(FormHighlightClass);
 }
 
 function addFormClickListener(form) {
-    
+    toggleHighlightForm(form);    
+
+    form.bind("click.formDetection", () =>  {
+        var formAsJson = serializeFormInformation(form);
+        sendFormInformationToBackground(formAsJson);
+        removeFormClickListener(form);
+    });
+}
+
+function serializeFormInformation(form) {
+    //TODO
+    getFormElements(form);
+    return "{'JSON test'}";
+}
+
+function sendFormInformationToBackground(formAsJson) {
+    chrome.runtime.sendMessage({type: NotificationFormDetected, options: { 
+        message: formAsJson
+    }});
+}
+
+function removeFormClickListener(form) {
+    toggleHighlightForm(form);
+
+    form.unbind("click.formDetection");
 }

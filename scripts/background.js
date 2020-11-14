@@ -2,6 +2,10 @@ function detectForms(tab) {
     chrome.tabs.sendMessage(tab.id, { text: MessageDetectForm });
 }
 
+function detachForms(tab) {
+    chrome.tabs.sendMessage(tab.id, { text: MessageDetachForm });
+}
+
 function enableFormDetection(tab) {
     chrome.storage.sync.get('isEnable', function(data) {
         var current = data.isEnable;
@@ -11,12 +15,20 @@ function enableFormDetection(tab) {
 
         if(current) {
             detectForms(tab);
+        } else {
+            detachForms(tab);
         }
     });
 }
 
 chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.set({isEnable: true});
+});
+
+chrome.runtime.onMessage.addListener(function(request, sender) {
+    if(request.type == NotificationFormDetected) {
+        console.log(request.options.message);
+    }
 });
 
 chrome.browserAction.onClicked.addListener(enableFormDetection);

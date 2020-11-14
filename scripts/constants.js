@@ -1,9 +1,8 @@
+//Messages Background -> Content script
 const MessageDetectForm = "detect-form";
 const MessageDetachForm = "detach-form";
 
-const FormDataProviders = [
-    "input",
-    "textArea",
-    "select",
-    "option"
-];
+//Messages Content -> Background script
+const NotificationFormDetected = "form-detected";
+
+const FormHighlightClass = "highlight-form";
