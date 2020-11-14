@@ -1,11 +1,5 @@
-function isValidUrl(url) {
-    return UrlRegex.test(url);
-}   
-
-function highlightForms(tab) {
-    if(isValidUrl(tab.url)) {
-        chrome.tabs.sendMessage(tab.id, { text: MessageDetectForm });
-    }
+function detectForms(tab) {
+    chrome.tabs.sendMessage(tab.id, { text: MessageDetectForm });
 }
 
 function enableFormDetection(tab) {
@@ -16,7 +10,7 @@ function enableFormDetection(tab) {
         chrome.storage.sync.set({isEnable: !current});
 
         if(current) {
-            highlightForms(tab);
+            detectForms(tab);
         }
     });
 }
@@ -25,5 +19,4 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.set({isEnable: true});
 });
 
-/* chrome.tabs.onActivated(enableFormDetection); */
 chrome.browserAction.onClicked.addListener(enableFormDetection);
